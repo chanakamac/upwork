@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  fastapi:
+    image: postgres:15.6 
+    container_name: fastapi_app
+    volumes:
+      - ./:/app  # Mount current directory to /app in the container
+    environment:
+      - HATCHET_CLIENT_TOKEN=${HATCHET_CLIENT_TOKEN}  # Pass the Hatchet token as an environment variable
+    ports:
+      - "8000:80"  # Map port 80 of the container to port 8000 on the host
+    working_dir: /app
+    command: uvicorn main:app --host 0.0.0.0 --port 80  # Command to run FastAPI
